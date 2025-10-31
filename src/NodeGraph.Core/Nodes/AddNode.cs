@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NodeGraph.Core.Abstractions;
+using NodeGraph.Core.Contexts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,25 @@ using System.Threading.Tasks;
 
 namespace NodeGraph.Core.Nodes
 {
-    internal class AddNode
+    public sealed class AddNode : INode
     {
+        public string Name { get; }
+        private readonly string _aKey, _bKey, _outKey;
+
+        public AddNode(string aKey, string bKey, string outKey, string name = "Add")
+        {
+            _aKey = aKey;
+            _bKey = bKey;
+            _outKey = outKey;
+            Name = name;
+        }
+
+        public void Evaluate(Context context)
+        {
+            var a = context.Get<double>(_aKey);
+            var b = context.Get<double>(_bKey);
+            context.Set<double>(_outKey, a+b);
+        }
+
     }
 }

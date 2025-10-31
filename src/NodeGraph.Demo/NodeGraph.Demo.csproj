@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NodeGraph.Core\NodeGraph.Core.csproj" />
+  </ItemGroup>
+
 </Project>
