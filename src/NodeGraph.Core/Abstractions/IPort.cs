@@ -8,7 +8,7 @@ namespace NodeGraph.Core.Abstractions
 {
     public enum PortDirection { In, Out }
 
-    public interface INodePort
+    public interface IPort
     {
         String Name { get; }
         System.Type ValueType { get; }

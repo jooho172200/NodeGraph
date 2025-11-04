@@ -20,5 +20,17 @@ namespace NodeGraph.Core.Contexts
 
         public bool Has(string key) => _data.ContainsKey(key);
 
+        // key 없으면 복사 skip
+        public bool TryGet<T>(string key, out T value)
+        {
+            if (_data.TryGetValue(key, out var v) && v is T t)
+            {
+                value = t;
+                return true;
+            }
+            value = default!;
+            return false;
+        }
+
     }
 }
