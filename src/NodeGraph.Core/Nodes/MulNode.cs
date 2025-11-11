@@ -13,7 +13,7 @@ namespace NodeGraph.Core.Nodes
         public string Name { get; }
         private readonly string _aKey, _bKey, _outKey;
 
-        public MulNode(string aKey, string bKey, string outKey, string name = "")
+        public MulNode(string aKey, string bKey, string outKey, string name = "Mul")
         {
             _aKey = aKey;
             _bKey = bKey;
