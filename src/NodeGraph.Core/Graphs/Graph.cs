@@ -10,10 +10,11 @@ namespace NodeGraph.Core.Graphs
 {
     public sealed class Graph
     {
-        public Dictionary<string, INode> Nodes { get; } = new();
+        //public Dictionary<string, INode> Nodes { get; } = new();
+        public Dictionary<string, IComputeNode> Nodes { get; } = new();
         public List<Edge> Edges { get; } = new();
 
-        public void AddNode(string nodeId, INode node)
+        public void AddNode(string nodeId, IComputeNode node)
         {
             if (string.IsNullOrWhiteSpace(nodeId))
                 throw new ArgumentException("nodeId is null or empty");
@@ -22,6 +23,10 @@ namespace NodeGraph.Core.Graphs
 
             if (Nodes.ContainsKey(nodeId))
                 throw new InvalidOperationException($"Duplicate node Id: '{nodeId}'");
+
+            if (!string.Equals(node.Id, nodeId, StringComparison.Ordinal))              
+                throw new InvalidOperationException(                                    
+                    $"Node Id mismatch. Graph key='{nodeId}', node.Id='{node.Id}'");
 
             Nodes[nodeId] = node;
         }
@@ -42,6 +47,20 @@ namespace NodeGraph.Core.Graphs
 
             if (!Nodes.ContainsKey(toNodeId))
                 throw new InvalidOperationException($"Unknown target node Id: '{toNodeId}'");
+
+            // 포트 존재 여부 검증
+            var fromNode = Nodes[fromNodeId];                                           
+            var toNode = Nodes[toNodeId];                                             
+
+            bool hasOutPort = fromNode.Outputs.Any(p => p.Name == fromPort);           
+            if (!hasOutPort)                                                           
+                throw new InvalidOperationException(                                   
+                    $"Unknown output port: {fromNodeId}.{fromPort}");                  
+
+            bool hasInPort = toNode.Inputs.Any(p => p.Name == toPort);                 
+            if (!hasInPort)                                                            
+                throw new InvalidOperationException(                                    
+                    $"Unknown input port: {toNodeId}.{toPort}");                        
 
             // self-loop 금지(같은 노드의 같은 포트)
             if (fromNodeId == toNodeId && string.Equals(fromPort, toPort, StringComparison.Ordinal))

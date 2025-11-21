@@ -8,25 +8,43 @@ using System.Threading.Tasks;
 
 namespace NodeGraph.Core.Nodes
 {
-    public sealed class MulNode : INode
+    public sealed class MulNode : IComputeNode
     {
         public string Name { get; }
-        private readonly string _aKey, _bKey, _outKey;
+        public string Id { get; }
+        public IReadOnlyList<IPort> Inputs { get; }
+        public IReadOnlyList<IPort> Outputs { get; }
 
-        public MulNode(string aKey, string bKey, string outKey, string name = "Mul")
+        public MulNode(string id, string name = "Mul")
         {
-            _aKey = aKey;
-            _bKey = bKey;
-            _outKey = outKey;
-            Name = name;
+            Id = id ?? throw new ArgumentNullException(nameof(id));
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+
+            Inputs = new IPort[]
+            {
+                new Port("A", typeof(double), PortDirection.In),
+                new Port("B", typeof(double), PortDirection.In)
+            };
+
+            Outputs = new IPort[]
+            {
+                new Port("Out", typeof(double), PortDirection.Out)
+            };
         }
 
-        public void Evaluate(Context context)
+        public void Evaluate(Context context, IPortKeyResolver keys)
         {
-            var a = context.Get<double>(_aKey);
-            var b = context.Get<double>(_bKey);
+            if(context is null) throw new ArgumentNullException(nameof(context));
+            if(keys is null) throw new ArgumentNullException(nameof(keys));
 
-            context.Set<double>(_outKey, a*b);
+            var aKey = keys.Resolve(Id, "A");
+            var bKey = keys.Resolve(Id, "B");
+            var outKey = keys.Resolve(Id, "Out");
+
+            var a = context.Get<double>(aKey);
+            var b = context.Get<double>(bKey);
+
+            context.Set<double>(outKey, a * b);
         }
     }
 }

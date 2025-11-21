@@ -33,6 +33,8 @@ namespace NodeGraph.Core.Executions
                 .GroupBy(e  => e.ToNodeId)
                 .ToDictionary(g => g.Key, g => g.ToList());
 
+            var keyResolver = new GraphPortKeyResolver();
+
             foreach ( var nodeId in order)
             {
                 if(incoming.TryGetValue(nodeId, out var inEdges))
@@ -59,7 +61,8 @@ namespace NodeGraph.Core.Executions
                     }
                 }
 
-                _graph.Nodes[nodeId].Evaluate(context);
+                var node = _graph.Nodes[nodeId];
+                node.Evaluate(context, keyResolver);
             }
 
         }
@@ -88,7 +91,13 @@ namespace NodeGraph.Core.Executions
                 indeg[e.ToNodeId]++;
             }
 
-            var q = new Queue<string>(indeg.Where(p => p.Value == 0).Select(p => p.Key));
+            //var q = new Queue<string>(indeg.Where(p => p.Value == 0).Select(p => p.Key));
+
+            var q = new Queue<string>(
+                indeg.Where(p => p.Value == 0)
+                    .OrderBy(p => p.Key)
+                    .Select(p => p.Key)
+                );
 
             while (q.Count > 0)
             {

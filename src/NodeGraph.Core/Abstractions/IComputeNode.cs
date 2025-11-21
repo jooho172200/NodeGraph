@@ -12,6 +12,6 @@ namespace NodeGraph.Core.Abstractions
         IReadOnlyList<IPort> Inputs { get; }
         IReadOnlyList<IPort> Outputs { get; }
 
-        void Evaluate(Contexts.Context ctx, IPortKeyResolver keys);
+        void Evaluate(Contexts.Context context, IPortKeyResolver keys);
     }
 }
