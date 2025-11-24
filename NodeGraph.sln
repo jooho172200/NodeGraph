@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36623.8 d17.14
+VisualStudioVersion = 17.14.36623.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeGraph.Core", "src\NodeGraph.Core\NodeGraph.Core.csproj", "{245A8E1D-DA7F-4D98-8724-8D98A44C796F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeGraph.Demo", "src\NodeGraph.Demo\NodeGraph.Demo.csproj", "{2EE186CA-5F30-4C72-9218-2AAF1DF1E0CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeGraph.Wpf", "NodeGraph.Wpf\NodeGraph.Wpf.csproj", "{020B46AB-90CF-40AB-8E12-57E42ADFA07C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2EE186CA-5F30-4C72-9218-2AAF1DF1E0CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EE186CA-5F30-4C72-9218-2AAF1DF1E0CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EE186CA-5F30-4C72-9218-2AAF1DF1E0CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{020B46AB-90CF-40AB-8E12-57E42ADFA07C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{020B46AB-90CF-40AB-8E12-57E42ADFA07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{020B46AB-90CF-40AB-8E12-57E42ADFA07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{020B46AB-90CF-40AB-8E12-57E42ADFA07C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
